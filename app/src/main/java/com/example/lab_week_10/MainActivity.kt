@@ -1,9 +1,9 @@
 package com.example.lab_week_10
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.lab_week_10.viewmodels.TotalViewModel
 
@@ -17,24 +17,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        updateText(viewModel.total)
+        // Tampilkan nilai awal agar tidak pernah tampil "%d"
+        updateText(viewModel.total.value ?: 0)
+
+        // Observe LiveData untuk sync UI
+        viewModel.total.observe(this) { t ->
+            updateText(t)
+        }
 
         findViewById<Button>(R.id.button_increment).setOnClickListener {
-            val newTotal = viewModel.incrementTotal()
-            updateText(newTotal)
+            viewModel.incrementTotal()
         }
     }
 
     private fun updateText(total: Int) {
         findViewById<TextView>(R.id.text_total).text =
             getString(R.string.text_total, total)
-    }
-
-    private fun prepareViewModel() {
-        // Belum menggunakan LiveData (akan ditambah di commit 2)
-        findViewById<Button>(R.id.button_increment).setOnClickListener {
-            val newTotal = viewModel.incrementTotal()
-            updateText(newTotal)
-        }
     }
 }
