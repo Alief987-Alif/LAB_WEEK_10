@@ -10,14 +10,13 @@ class TotalViewModel : ViewModel() {
     val total: LiveData<Int> = _total
 
     init {
-        _total.value = 0 // sinkron, tidak pakai postValue agar tidak flicker
+        _total.value = 0
     }
 
     fun incrementTotal() {
         _total.value = (_total.value ?: 0) + 1
     }
 
-    // optional: setter jika butuh set langsung dari luar
     fun setTotal(newTotal: Int) {
         _total.value = newTotal
     }
