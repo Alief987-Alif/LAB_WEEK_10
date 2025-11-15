@@ -9,7 +9,6 @@ import androidx.room.Update
 
 @Dao
 interface TotalDao {
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(total: Total)
 
